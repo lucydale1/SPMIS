@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Results{% endblock %}
+
+{% block content %}
+<h1>Results</h1>
+        <table class="table">
+            <tr><th>Paper Name</th><th style="min-width: 100px">Author</th><th>Description</th><th>Year</th></tr>
+            <tr>
+                <td><a href="#">Argumentation in artificial intelligence</a></td>
+                <td>TJM Bench-Capon, PE Dunne</td>
+                <td>In this paper, we bring techniques from operations research to bear on the problem of choosing optimal actions in partially observable stochastic domains. </td>
+                <td>2007</td>
+            </tr>
+            <tr>
+                <td><a href="#">Intelligence without presentation</a></td>
+                <td>RA Brooks</td>
+                <td>Abstract Artificial intelligence research has foundered on the issue of representation. When intelligence is approached in an incremental manner, with strict reliance on interfacing to the real world through perception and action, reliance on representation disappears.</td>
+                <td>1991</td>
+            </tr>
+            <tr>
+                <td><a href="#">Towards a logic-based theory of argumentation</a></td>
+                <td>P Besnard, A Hunter</td>
+                <td>We explore a framework for argumentation (based on classical logic) in which an argument is a pair where the first item in the pair is a minimal consistent set of formulae that proves the second item (which is a formula).</td>
+                <td>2001</td>
+            </tr>
+            <tr>
+                <td><a href="#">Machine learning: An artificial intelligence approach</a></td>
+                <td>RS Michalski et al.</td>
+                <td>For researchers in artificial intelligence, computer science, and cognitive psychology, it provides an easily accessible collection of state-of-the-art papers presenting current results, which will hopefully spur fur- ther research.</td>
+                <td>2013</td>
+            </tr>
+            <tr>
+                <td><a href="#">Heuristics: intelligent search strategies for computer problem solving</a></td>
+                <td>J Pearl</td>
+                <td>This book presentsan analysis of the nature and the power of typical heuristic methods, primarily those used inartificial intelligence and operations research, to solve problems in areas such as reasoning...</td>
+                <td>1984</td>
+            </tr>
+            <tr>
+                <td><a href="#">Teaching machines to read and comprehend</a></td>
+                <td>KM Hermann et al.</td>
+                <td>Teaching machines to read natural language documents remains an elusive challenge. Machine reading systems can be tested on their ability to answer questions posed on the contents of documents that they have seen, but until now large scale training and test datasets have been missing for this type of evaluation.</td>
+                <td>2015</td>
+            </tr>
+            <tr>
+                <td><a href="#">Neural turing machines</a></td>
+                <td>Alex Graves et al.</td>
+                <td>We extend the capabilities of neural networks by coupling them to external memory resources, which they can interact with by attentional processes.</td>
+                <td>2014</td>
+            </tr>
+        </table>
+
+        <p>
+            test results:
+        </p>
+
+
+
+        {{api_results}}
+
+
+{% endblock %}
