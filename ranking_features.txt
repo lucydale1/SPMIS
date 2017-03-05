@@ -1,17 +1,13 @@
-1) Citation Count - The number of times a paper has been cited by other papers. The citation count of a paper may provide an accurate evaluation 
-of the quality and impact of a specific piece of work, regardless of the author.
+1) Citation Count - The number of times a paper has been cited by other papers. The citation count of a paper may provide an accurate evaluation of the quality and impact of a specific piece of work, regardless of the author. This is because a high citation count means the paper is highly recognised in the field.
 
-2) Publication Date - The year in which the paper was plublished. This is used to see if the paper is relevant in the current time period e.g. a paper
-from 2016 would normally be more relevant than a paper from 2008.
+2) Publication Date - The year in which the paper was plublished. This is used to see if the paper is relevant in the current time period e.g. a paper from 2016 would normally be more relevant than a paper from 2008.
 
-3) Source - The source of the paper may be more relevant or more trustworthy depending on the amount of times the source has been cited by other sources.
+3) Source - The source of  a paper can determine how trustworthy/reliable the paper can be. The trustworthiness of a source can be identified by several factors such as who is operating/responsible for the site? What is the identity and mission of the site? Does the site provide references for research that can be independently verified? How many times has this source been cited? Etc.
 
-4) Relation to keywords - Compares the keywords of the user query to the relevant papers returned. The more times the paper has the keyword, the more
-relevant the returned paper becomes.
+4) Relation to keywords - Compares the keywords of the user query to the relevant papers returned. Generally, the more times the paper has the keyword, the more relevant the returned paper becomes.
 
-5) Length - The length of the paper itself. This could have an impact on what type of rsearch paper the user reads as different types of paper typically
-have different lengths.
+5) Length - The length of the paper itself. This could have an impact on what type of research paper the user reads as different types of paper typically have different lengths.
 
-6) Quality of Bibliography/References - 
+6) Quality of Bibliography/References - The significance of a bibliography or reference. The strength of a single citation can be affected by this. For example, the citation count of a lesser known author is much weaker than that of a renowned author in the field.
 
 7) Contains abstract - Whether or not the paper contains an abstract based on the returned search from the API.
