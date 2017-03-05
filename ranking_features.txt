@@ -1,0 +1,7 @@
+1) Citation Count
+2) Publication Year
+3) Source
+4) Relation to keywords
+5) Length
+6) Quality of Bibliography/References
+7) Contains abstract
