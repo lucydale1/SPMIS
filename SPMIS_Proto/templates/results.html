@@ -2,7 +2,13 @@
 {% block title %}Results{% endblock %}
 
 {% block content %}
+
+
+
 <h1>Results</h1>
+
+{{message}}
+
         <table class="table">
             <tr><th>Paper Name</th><th style="min-width: 100px">Author</th><th>Description</th><th>Year</th></tr>
             <tr>
@@ -52,6 +58,20 @@
         <p>
             test results:
         </p>
+
+        <table>
+            {% for dict in api_results %}
+              <tr>
+              {% for key, value in dict.items %}
+                <td>
+                    {{value}}
+                </td>
+              {% endfor %}
+              </tr>
+            {% endfor %}
+        </table>
+
+
 
 
 
