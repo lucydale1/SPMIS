@@ -1,9 +1,10 @@
-from django.conf.urls import url
+from django.conf.urls import url,  include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic.base import TemplateView
 from django.contrib.auth.views import login
 from login.views import register1, registration_complete, results
+admin.autodiscover()
 
 urlpatterns = [
     url(r'^home/$', TemplateView.as_view(template_name='home.html'), name='home'),
@@ -14,5 +15,6 @@ urlpatterns = [
     url(r'^register/$', register1, name='register'),
     url(r'^register/registration_complete/$', registration_complete, name='complete'),
     url(r'^results/$', results, name='results'),
+    url(r'^admin/', include(admin.site.urls)),
 
 ]
