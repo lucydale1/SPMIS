@@ -5,7 +5,6 @@ from collections import OrderedDict
 import requests # Used to send HTTP requests to the API
 import json     # Library to convert the JSON files sent back ---> python dictionary
 from pprint import pprint # A library to display nicer looking data structures
-from collections import OrderedDict
 #from django.core.context_processors import csrf
 
 
@@ -42,21 +41,12 @@ def results(request):
     # Request data from server --> JSON file returned
     response = requests.get("http://api.springer.com/metadata/json", data)
 
-    # Convert the response to a Python object
     jr = response.json()
-
-    # pprint(jr["records"])
-
-
-
-    # for i in jr["records"]:
-    #     new.append(i.copy())
         
     api_results = [OrderedDict([('title',i['title']),
-            ('abstract',i['abstract'][:200]),
+            ('abstract',i['abstract'][8:400]),
             ('publicationDate',i['publicationDate']),
-            ('url',i['url'][0]['value']),
-            ('issn',i['issn'])]) for i in jr["records"]]
+            ('url',i['url'][0]['value']),]) for i in jr["records"]]
 
     today = "hello there"
 
