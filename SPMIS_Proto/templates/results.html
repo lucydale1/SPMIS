@@ -13,14 +13,15 @@
               <tr>
               {% for key, value in dict.items %}
                 {% if key == "url" %}
-
+                <td>  
+                    <a href= "{{value}}">
+                    
                 {% endif %}
               {% endfor %}
 
               {% for key, value in dict.items %}
                 {% if key != "issn" and key != "url" and key == "title" %}
-                <td>  
-                    <a href="">{{value}}</a>  
+                {{value}}</a>  
                 </td>
                 {% elif key != "issn" and key != "url" %}
                 <td>
