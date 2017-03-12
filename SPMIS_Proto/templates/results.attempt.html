@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Results{% endblock %}
+
+{% block content %}
+
+<h1>Results</h1>
+
+        <table>
+            <tr>
+                <th>Paper Name</th><th style="min-width: 100px">Abstract</th><th>Date</th><th>Save?</th>
+            </tr>
+            {% for dict in api_results %}
+            <form action="/results/" method="get">
+              <tr>
+              {% for key, value in dict.items %}
+                {% if key == "url" %}
+                <td>  
+                    <a href= "{{value}}">
+                    <input type ="hidden" name="url" value="{{value}}">
+                    
+                {% endif %}
+              {% endfor %}
+
+              {% for key, value in dict.items %}
+                
+                {% if key != "issn" and key != "url" and key == "title" %}
+                {{value}}</a>
+                </td>
+                <input type="hidden" name="title" value="{{value}}">
+                {% elif key != "issn" and key != "url" and key == "abstract"%}
+                <td>
+                    {{value}}
+                </td>
+                <input type="hidden" name="abstract" value="{{value}}">
+                {% elif key != "issn" and key != "url" %}
+                <td>
+                    {{value}}
+                </td>
+                <input type="hidden" name="date" value="{{value}}">
+                {% endif %}
+                <input type="hidden" name="search_term" value="{{search_term}}">
+                
+              {% endfor %}
+              <td>
+                <button type="submit" value="Save Paper" >
+                </td>
+              </tr>
+            {% endfor %}
+        </table>
+
+{% endblock %}

@@ -6,6 +6,9 @@ import requests # Used to send HTTP requests to the API
 import json     # Library to convert the JSON files sent back ---> python dictionary
 from pprint import pprint # A library to display nicer looking data structures
 #from django.core.context_processors import csrf
+from login.models import paperHolder
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 def register1(request):
@@ -27,10 +30,13 @@ def register1(request):
 def registration_complete(request):
     return render(request, 'register_complete.html')
 
+
 def results(request):
 
     if request.GET.get('search_term'):
         message = request.GET['search_term']
+        if message == "":
+            message = 'eggs'
     else:
         message = 'eggs'
 
@@ -50,6 +56,17 @@ def results(request):
 
     today = "hello there"
 
-    # for paper in results:
-    #     print(paper)
-    return render(request, "results.html", {"api_results" : api_results, "today" : today})
+    #if request contains url identifier
+    if (request.GET.get('url')):
+        user_id = request.user.id
+
+        url = request.GET['url']
+        #find the right paper in api_results
+        for result in api_results:
+            if result['url'] == url:
+                #create entry in db
+                p = paperHolder(user_id=user_id, papername=result['title'], url=result['url'], date=result['publicationDate'])
+                #save to db
+                p.save()
+
+    return render(request, "results.html", {"api_results" : api_results, "today" : today, "search_term" : message})

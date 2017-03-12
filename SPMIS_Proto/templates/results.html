@@ -7,28 +7,53 @@
 
         <table>
             <tr>
-                <th>Paper Name</th><th style="min-width: 100px">Abstract</th><th>Date</th>
+                <th>Paper Name</th><th style="min-width: 100px">Abstract</th><th>Date</th><th>Save?</th>
             </tr>
             {% for dict in api_results %}
+            <form action="/results/" method="get">
               <tr>
+
+
               {% for key, value in dict.items %}
                 {% if key == "url" %}
                 <td>  
                     <a href= "{{value}}">
-                    
+                    <input type="hidden" name="url" value="{{value}}">
+
+                    <input type="hidden" name="search_term" value="{{search_term}}">
                 {% endif %}
               {% endfor %}
+              
+
 
               {% for key, value in dict.items %}
+                
                 {% if key != "issn" and key != "url" and key == "title" %}
-                {{value}}</a>  
+                {{value}}</a>
                 </td>
-                {% elif key != "issn" and key != "url" %}
+                
+                {% elif key != "issn" and key != "url" and key == "abstract"%}
                 <td>
                     {{value}}
                 </td>
+                
+                {% elif key != "issn" and key != "url" and key == "publicationDate" %}
+                <td>
+                    {{value}}
+
+                </td>
+       
+                  
+
+                
                 {% endif %}
+                
+                
               {% endfor %}
+              <td>
+                <button type="submit" value="Save Paper" >
+                </form>
+                </td>
               </tr>
             {% endfor %}
         </table>
