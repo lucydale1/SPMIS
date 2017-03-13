@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic.base import TemplateView
 from django.contrib.auth.views import login
-from login.views import register1, registration_complete, results
+from login.views import register1, registration_complete, results, savedPapers
 admin.autodiscover()
 
 urlpatterns = [
@@ -16,5 +16,5 @@ urlpatterns = [
     url(r'^register/registration_complete/$', registration_complete, name='complete'),
     url(r'^results/$', results, name='results'),
     url(r'^admin/', include(admin.site.urls)),
-
+    url(r'^account/$', savedPapers, name='account'),
 ]

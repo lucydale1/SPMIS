@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Saved Papers{% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+  <h1>Saved Papers</h1>
+
+  <table>
+  	<tr>
+  	  <th>Paper Name</th>
+  	  <th>Date</th>
+  	  <th>Delete?</th>
+  	</tr>
+
+	{% for dict in saved_papers %}
+	<tr>
+
+	{% for key, value in dict.items %}
+
+	  {% if key == "url" %}
+	    <td>
+	  	  <a href="{{value}}">
+
+	  {% endif %}
+	{% endfor %}
+	
+	{% for key, value in dict.items %}
+
+	  {% if key != "url" and key != "date" and key == "papername" %}
+	    {{value}} </a> 
+
+	  {% elif key != "papername" and key != "url" and key == "date" %}
+	    <td> {{value}} </td>
+	    <td> DEL </td>
+	    </tr>
+
+	  {% endif %}
+
+	{% endfor %}
+	{% endfor %}
+	</table>
+{% endif %}
+
+{% endblock %}

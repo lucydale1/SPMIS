@@ -9,6 +9,8 @@ from pprint import pprint # A library to display nicer looking data structures
 from login.models import paperHolder
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
+
 
 
 def register1(request):
@@ -30,6 +32,23 @@ def register1(request):
 def registration_complete(request):
     return render(request, 'register_complete.html')
 
+
+def savedPapers(request):
+    saved_papers = []
+    this_user_id = request.user.id
+    data = serializers.serialize( "python", paperHolder.objects.filter(user_id=this_user_id ))
+    for item in data:
+        for shit, value in item.items():
+                if (shit == "fields"):
+                    saved_papers.append(value)
+    print(saved_papers)
+                
+    #saved_papers = [OrderedDict([('title', paper.get_field(papername)),
+    #    ('url', paper._meta.get_field(url)),
+    #    ('date', paper._meta.get_field(date))]) for paper in savedPapers]
+
+
+    return render(request, 'account.html', {"saved_papers" : saved_papers})
 
 def results(request):
 

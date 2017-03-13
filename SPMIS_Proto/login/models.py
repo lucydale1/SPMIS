@@ -7,3 +7,5 @@ class paperHolder(models.Model):
 	url = models.TextField(max_length=500, blank=True)
 	date = models.TextField(max_length=100, blank=True)
 
+	def createList(self):
+		return [papername, url, date]
