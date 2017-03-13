@@ -76,16 +76,17 @@ def results(request):
     today = "hello there"
 
     #if request contains url identifier
+
     if (request.GET.get('url')):
         user_id = request.user.id
-
-        url = request.GET['url']
-        #find the right paper in api_results
-        for result in api_results:
-            if result['url'] == url:
-                #create entry in db
-                p = paperHolder(user_id=user_id, papername=result['title'], url=result['url'], date=result['publicationDate'])
-                #save to db
-                p.save()
+        if(user_id is not None):
+            url = request.GET['url']
+            #find the right paper in api_results
+            for result in api_results:
+                if result['url'] == url:
+                    #create entry in db
+                    p = paperHolder(user_id=user_id, papername=result['title'], url=result['url'], date=result['publicationDate'])
+                    #save to db
+                    p.save()
 
     return render(request, "results.html", {"api_results" : api_results, "today" : today, "search_term" : message})
