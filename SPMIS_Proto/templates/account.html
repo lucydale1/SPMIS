@@ -14,12 +14,13 @@
 
 	{% for dict in saved_papers %}
 	<tr>
-
+	<form action="/account/" method="get">
 	{% for key, value in dict.items %}
 
 	  {% if key == "url" %}
 	    <td>
 	  	  <a href="{{value}}">
+	  	  <input type="hidden" name="url" value="{{value}}">
 
 	  {% endif %}
 	{% endfor %}
@@ -31,7 +32,9 @@
 
 	  {% elif key != "papername" and key != "url" and key == "date" %}
 	    <td> {{value}} </td>
-	    <td> DEL </td>
+	    
+	    <td> <button type="submit" value="Delete!" ></td>
+	    </form>
 	    </tr>
 
 	  {% endif %}

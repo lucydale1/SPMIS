@@ -10,6 +10,7 @@ from login.models import paperHolder
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from datetime import *
 
 
 
@@ -36,6 +37,11 @@ def registration_complete(request):
 def savedPapers(request):
     saved_papers = []
     this_user_id = request.user.id
+
+    if request.GET.get('url'):
+        url = request.GET.get('url')
+        paperHolder.objects.filter(user_id=this_user_id, url=url).delete()
+
     data = serializers.serialize( "python", paperHolder.objects.filter(user_id=this_user_id ))
     for item in data:
         for shit, value in item.items():
@@ -85,8 +91,23 @@ def results(request):
             for result in api_results:
                 if result['url'] == url:
                     #create entry in db
-                    p = paperHolder(user_id=user_id, papername=result['title'], url=result['url'], date=result['publicationDate'])
-                    #save to db
-                    p.save()
+                    saved_papers = []
+                    data = serializers.serialize( "python", paperHolder.objects.filter(user_id=user_id ))
+                    for item in data:
+                        for key, value in item.items():
+                            if (key == 'fields'):
+                                saved_papers.append(value)
+
+                    date = datetime.strptime(result['publicationDate'], "%Y-%m-%d")
+
+                    #check if user has already saved paper change to not in and get rid of useless else statement
+                    if OrderedDict([("user_id", user_id), ("papername", result['title']), ("url", result['url']), ("date", date.date())]) in saved_papers:
+                        #user has already saved paper
+                        print("already got et mate")
+                    else:
+                        #save that paper
+                        p = paperHolder(user_id=user_id, papername=result['title'], url=result['url'], date=result['publicationDate'])
+                        p.save()
+
 
     return render(request, "results.html", {"api_results" : api_results, "today" : today, "search_term" : message})
