@@ -9,3 +9,9 @@ class paperHolder(models.Model):
 
 	def createList(self):
 		return [papername, url, date]
+
+class variable_holder(models.Model):
+    counter = models.IntegerField()
+
+    def getCounter(self):
+        return self.counter

@@ -6,11 +6,13 @@ import requests # Used to send HTTP requests to the API
 import json     # Library to convert the JSON files sent back ---> python dictionary
 from pprint import pprint # A library to display nicer looking data structures
 #from django.core.context_processors import csrf
-from login.models import paperHolder
+from login.models import paperHolder, variable_holder
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from datetime import *
+from login.changekeys import nextkey
+from django.core.cache import cache
 
 
 
@@ -58,6 +60,12 @@ def savedPapers(request):
 
 def results(request):
 
+    if cache.get('counter') is None:
+        cache.set('counter', 0, None)
+        api_key = nextkey();
+    else:
+        api_key = nextkey();
+
     if request.GET.get('search_term'):
         message = request.GET['search_term']
         if message == "":
@@ -65,9 +73,12 @@ def results(request):
     else:
         message = 'eggs'
 
+    # Removes the \n newline character
+    api_key = api_key[:len(api_key)-1]
+
     # Dictionary of the Querystring parameters and constraints (see website for details)
     keywords = 'keyword: ' + message
-    data = {'api_key': 'd094966bbd58635d6772e3c43a0df59a', 'q': keywords, 'p': '10'}
+    data = {'api_key': api_key, 'q': keywords, 'p': '10'}
 
     # Request data from server --> JSON file returned
     response = requests.get("http://api.springer.com/metadata/json", data)
