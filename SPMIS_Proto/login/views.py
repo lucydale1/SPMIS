@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from datetime import *
-from login.changekeys import nextkey
+from login.changekeys import nextkey, getstart
 from django.core.cache import cache
 
 
@@ -50,7 +50,7 @@ def savedPapers(request):
                 if (shit == "fields"):
                     saved_papers.append(value)
     print(saved_papers)
-                
+
     #saved_papers = [OrderedDict([('title', paper.get_field(papername)),
     #    ('url', paper._meta.get_field(url)),
     #    ('date', paper._meta.get_field(date))]) for paper in savedPapers]
@@ -61,7 +61,8 @@ def savedPapers(request):
 def results(request):
 
     if cache.get('counter') is None:
-        cache.set('counter', 0, None)
+        start_key = getstart()
+        cache.set('counter', start_key, None)
         api_key = nextkey();
     else:
         api_key = nextkey();
@@ -84,7 +85,7 @@ def results(request):
     response = requests.get("http://api.springer.com/metadata/json", data)
 
     jr = response.json()
-        
+
     api_results = [OrderedDict([('title',i['title']),
             ('abstract',i['abstract'][8:400]),
             ('publicationDate',i['publicationDate']),
