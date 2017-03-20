@@ -86,3 +86,22 @@ response = requests.get("http://export.arxiv.org/api/query?", data)
 
 print(response.text)
 ```
+
+--
+<span id="arxiv"/>
+### Web of Science
+* Request example: <http://ipscience-help.thomsonreuters.com/LAMRService/WebServiceOperationsGroup/requestAPIWoS.html>
+* I (Ollie) will buy a drink for whoever manages to first successfully query this API 🍺
+
+```python
+import requests
+
+#body = {'username':'CoplestonO@cardiff.ac.uk', 'password': 'Tess3bear!'}
+
+data = open("test.xml")
+
+response = requests.post("https://ws.isiknowledge.com/cps/xrpc", data)
+
+print(response)
+print(response.text)
+```
