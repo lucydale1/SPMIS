@@ -92,6 +92,7 @@ print(response.text)
 ### Web of Science
 * Request example: <http://ipscience-help.thomsonreuters.com/LAMRService/WebServiceOperationsGroup/requestAPIWoS.html>
 * I (Ollie) will buy a drink for whoever manages to first successfully query this API 🍺
+* Possibly way of using: https://github.com/enricobacis/wos Uploaded to PyPl so we could use this library!!!
 
 ```python
 import requests
