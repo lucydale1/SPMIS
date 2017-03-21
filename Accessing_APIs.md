@@ -9,7 +9,7 @@
 	* Returns JSON
 * [Arxiv](#arxiv) (Success)
 	* Returns XML
-* Web Of Science
+* [Web Of Science](#webos)
 	* Work in progress
 
 --
@@ -88,7 +88,7 @@ print(response.text)
 ```
 
 --
-<span id="arxiv"/>
+<span id="webos"/>
 ### Web of Science
 * Request example: <http://ipscience-help.thomsonreuters.com/LAMRService/WebServiceOperationsGroup/requestAPIWoS.html>
 * I (Ollie) will buy a drink for whoever manages to first successfully query this API 🍺
