@@ -9,7 +9,7 @@
 	* Returns JSON
 * [Arxiv](#arxiv) (Success)
 	* Returns XML
-* [Web Of Science](#webos)
+* [Web Of Science](#webos) (Not working)
 	* Work in progress
 
 --
