@@ -4,15 +4,17 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}SPMIS: Search{% endblock %}</title>
-        <link rel="stylesheet" href="{% static 'style.css' %}" media="screen" type="text/css" />
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <!--favicons-->
         <link href="https://static.tutsplus.com/assets/favicon-3ef7b4f54ed4378b31ff3124d3c4bff8.png" rel="shortcut icon" type="image/png" />
         <link href="https://static.tutsplus.com/assets/apple-touch-icon-3ef7b4f54ed4378b31ff3124d3c4bff8.png" rel="apple-touch-icon" type="image/png" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'style.css' %}" media="screen" type="text/css" />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     </head>
     <body>
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
         <header>
         <div id="topbar">
             <span id="logo"><a href="{% url 'home' %}">SPMIS</a></span>
@@ -21,6 +23,7 @@
               <a href="{% url 'logout' %}"> Logout</a>
             {% else %}
               <a href="{% url 'register' %}">Register</a>
+                <button type="button" class="btn btn-basic" data-toggle="modal" data-target="#loginWindow">Log In</button>
               <a href="{% url 'login' %}">Login</a>
             {% endif %}
         </div>
@@ -29,5 +32,40 @@
         {% block content %}
         {% endblock %}
         </main>
+
+    <!--- Login Window -->
+    <div class="modal fade" id="loginWindow">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Log In</h3>
+                </div>
+
+                <!-- Body (form) -->
+                <div class="modal-body">
+                    <form id="loginForm" role="form" method="post" action="https://www.bbc.co.uk">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="Submit" form="loginForm" class="btn btn-primary btn-block" id="loginSumbit">Log In</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Window -->
     </body>
 </html>
