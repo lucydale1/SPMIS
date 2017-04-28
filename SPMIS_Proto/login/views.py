@@ -35,7 +35,6 @@ def register1(request):
 def registration_complete(request):
     return render(request, 'register_complete.html')
 
-
 def savedPapers(request):
     saved_papers = []
     this_user_id = request.user.id
@@ -82,7 +81,8 @@ def results(request):
     data = {'api_key': api_key, 'q': keywords, 'p': '10'}
 
     # Request data from server --> JSON file returned
-    response = requests.get("http://api.springer.com/metadata/json", data)
+    response = requests.get("http://api.springer.com/metadata/json"
+                            "", data)
 
     jr = response.json()
 
