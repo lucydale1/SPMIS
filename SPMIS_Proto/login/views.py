@@ -45,8 +45,8 @@ def savedPapers(request):
 
     data = serializers.serialize( "python", paperHolder.objects.filter(user_id=this_user_id ))
     for item in data:
-        for shit, value in item.items():
-                if (shit == "fields"):
+        for stuff, value in item.items():
+                if (stuff == "fields"):
                     saved_papers.append(value)
     print(saved_papers)
 
@@ -59,6 +59,7 @@ def savedPapers(request):
 
 def results(request):
 
+    user_id=request.user.id
     if cache.get('counter') is None:
         start_key = getstart()
         cache.set('counter', start_key, None)
@@ -70,6 +71,10 @@ def results(request):
         message = request.GET['search_term']
         if message == "":
             message = 'eggs'
+        else:
+            if(user_id is not None):
+                query = historyHolder(user_id=user_id, searchQuery=request.GET.get('search_term'), date=datetime.now())
+                query.save()
     else:
         message = 'eggs'
 
@@ -96,7 +101,6 @@ def results(request):
     #if request contains url identifier
 
     if (request.GET.get('url')):
-        user_id = request.user.id
         if(user_id is not None):
             url = request.GET['url']
             #find the right paper in api_results
