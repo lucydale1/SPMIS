@@ -41,7 +41,32 @@
 
 	{% endfor %}
 	{% endfor %}
+  </table>
+  <h1>Search History</h1>
+  <table>
+  	<tr>
+  	  <th>Search History</th>
+  	</tr>
+
+	{% for dict in search_history %}
+	<tr>
+	<form action="{% url 'results' %}" method="get">
+	{% for key, value in dict.items %}
+
+	  {% if key == "searchQuery" %}
+	    <td>
+	    <input type="hidden" name="search_term" value="{{value}}"/>
+	  	  <button type="submit">{{value}}</button>
+	  	</td>
+	  	</form>
+	  {% endif %}
+	
+	</tr>
+	{% endfor %}
+	
+	{% endfor %}
 	</table>
+	
 {% endif %}
 
 {% endblock %}

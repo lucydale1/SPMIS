@@ -6,11 +6,12 @@ import requests # Used to send HTTP requests to the API
 import json     # Library to convert the JSON files sent back ---> python dictionary
 from pprint import pprint # A library to display nicer looking data structures
 #from django.core.context_processors import csrf
-from login.models import paperHolder, variable_holder
+from login.models import paperHolder, historyHolder
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from datetime import *
+from datetime import date as d
+from datetime import datetime
 from login.changekeys import nextkey, getstart
 from django.core.cache import cache
 
@@ -38,7 +39,7 @@ def registration_complete(request):
 def savedPapers(request):
     saved_papers = []
     this_user_id = request.user.id
-
+    search_history = []
     if request.GET.get('url'):
         url = request.GET.get('url')
         paperHolder.objects.filter(user_id=this_user_id, url=url).delete()
@@ -48,14 +49,16 @@ def savedPapers(request):
         for stuff, value in item.items():
                 if (stuff == "fields"):
                     saved_papers.append(value)
-    print(saved_papers)
+    search_data = serializers.serialize( "python", historyHolder.objects.filter(user_id=this_user_id))
+    for item in search_data:
+        for key, value in item.items():
+                if(key =="fields"):
+                    search_history.append(value)
+                   
 
-    #saved_papers = [OrderedDict([('title', paper.get_field(papername)),
-    #    ('url', paper._meta.get_field(url)),
-    #    ('date', paper._meta.get_field(date))]) for paper in savedPapers]
 
 
-    return render(request, 'account.html', {"saved_papers" : saved_papers})
+    return render(request, 'account.html', {"saved_papers" : saved_papers, "search_history" : search_history})
 
 def results(request):
 
