@@ -5,7 +5,7 @@
     <div class="box">
         <div class="container-1">
         
-            <form action="/results/" method="get">
+            <form action="{% url 'results' %}" method="get">
                 <input type="text" id="search" placeholder="Search..." name="search_term"/>
                 <button class="icon" type="submit"><i class="fa fa-search"></i></button>
             </form>

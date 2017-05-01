@@ -123,6 +123,6 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'home'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "login", "static", "banana")]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "login", "static", "login")]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "login", "static")

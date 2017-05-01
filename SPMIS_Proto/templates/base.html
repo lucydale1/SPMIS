@@ -5,13 +5,15 @@
         <meta charset="UTF-8">
         <title>{% block title %}SPMIS: Search{% endblock %}</title>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+        <script src="{% static 'login/js/bootstrap.min.js' %}"></script>
         <!--favicons-->
         <link href="https://static.tutsplus.com/assets/favicon-3ef7b4f54ed4378b31ff3124d3c4bff8.png" rel="shortcut icon" type="image/png" />
         <link href="https://static.tutsplus.com/assets/apple-touch-icon-3ef7b4f54ed4378b31ff3124d3c4bff8.png" rel="apple-touch-icon" type="image/png" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <link rel="stylesheet" href="{% static 'style.css' %}" media="screen" type="text/css" />
+        <link rel="stylesheet" href="{% static 'login/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'login/css/style.css' %}" media="screen" type="text/css" />
+        <script src="{% static 'login/js/main.js' %}"></script>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     </head>
     <body>
@@ -23,8 +25,8 @@
               <a href="{% url 'logout' %}"> Logout</a>
             {% else %}
               <a href="{% url 'register' %}">Register</a>
-                <button type="button" class="btn btn-basic" data-toggle="modal" data-target="#loginWindow">Log In</button>
-              <a href="{% url 'login' %}">Login</a>
+                <button type="button" class="btn btn-basic" href="{% url 'login' %}"><a style="color:rgba(38,60,144,0.85);" href="{% url 'login' %}">Log In</a></button>
+
             {% endif %}
         </div>
         </header>

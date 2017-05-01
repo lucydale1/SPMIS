@@ -6,6 +6,7 @@ from django.contrib.auth.views import login
 from login.views import register1, registration_complete, results, savedPapers
 admin.autodiscover()
 
+app_name= 'login'
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
