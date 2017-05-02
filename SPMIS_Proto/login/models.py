@@ -18,6 +18,7 @@ class variable_holder(models.Model): #useless now?
 class historyHolder(models.Model):
     user_id = models.IntegerField()
     searchQuery = models.TextField(max_length=500, blank=True)
+    dateAndTime = models.DateTimeField()
     
     def __str__(self):
         return self.title

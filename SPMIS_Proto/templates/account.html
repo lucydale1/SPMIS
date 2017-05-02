@@ -46,6 +46,7 @@
   <table align="center">
   	<tr>
   	  <th>Search History</th>
+  	  <th>Date and Time</th>
   	</tr>
 
 	{% for dict in search_history %}
@@ -59,9 +60,15 @@
 	  	  <button type="submit">{{value}}</button>
 	  	</td>
 	  	</form>
-	  {% endif %}
+	  {% endif %}	
 	
-	</tr>
+	  {% if key == "dateAndTime" %}
+	  <td>
+	  {{value}}
+	  </td>
+	  </tr>
+	  {% endif %}
+
 	{% endfor %}
 	
 	{% endfor %}

@@ -77,7 +77,7 @@ def results(request):
             message = 'eggs'
         else:
             if(user_id is not None):
-                query = historyHolder(user_id=user_id, searchQuery=request.GET.get('search_term'))
+                query = historyHolder(user_id=user_id, searchQuery=request.GET.get('search_term'), dateAndTime=datetime.now())
                 query.save()
     else:
         message = 'eggs'
