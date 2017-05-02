@@ -104,6 +104,7 @@ def results(request):
     response = requests.get("http://api.springer.com/metadata/json"
                             "", data)
 
+    # begin switching this over to scopus
     jr = response.json()
     api_results = [OrderedDict([('title',i['title']),
             ('abstract',i['abstract'][8:600]),
@@ -119,6 +120,7 @@ def results(request):
     today = "hello there"
     
     #if request contains url identifier
+
 
     if (request.GET.get('url')):
         if(user_id is not None):
