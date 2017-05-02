@@ -1,0 +1,169 @@
+body{
+  background: #343d46;
+}
+
+thead tr {
+    background-color: #65737e;
+}
+
+
+tr {
+    padding: 40px;
+    margin: 40px;
+    background-color: rgba(175, 179, 185, 0.13);
+    border-bottom: 5px solid white;
+}
+
+tr th,tr td {
+    color: white;
+}
+
+tr a {
+    color: rgba(246, 178, 176, 0.76);
+}
+
+tr a:hover {
+    color: rgba(246, 178, 176, 0.76);
+}
+
+#topbar{
+    text-align: right;
+    padding: 10px;
+}
+
+#topbar a{
+    color: #9ca7b0;
+    font-style: normal;
+    font-family: "Montserrat", sans-serif;
+    text-decoration: none;
+    padding:20px;
+    text-align: center;
+    transition: all 0.2s linear;
+}
+
+#topbar a:visited{
+    color: #9ca7b0;
+}
+
+#topbar a:hover {
+    color: white;
+}
+
+#topbar a:focus {
+    color: white;
+}
+
+#logo {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    padding: 15px;
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    font-size: 20pt;
+}
+
+#desc {
+    max-width: 75%;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "Montserrat", sans-serif;
+    color: #9ca7b0;
+    text-align: center;
+}
+
+/*table tbody tr:nth-child(2n + 1) {*/
+    /*background-color: rgba(0, 37, 210, 0.26);*/
+/*}*/
+
+h1 {
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    color: #9ca7b0;
+    padding: 20px;
+}
+
+.box{
+  margin: 200px auto 100px;
+  width: 600px;
+  height: 50px;
+}
+
+/******** Search Box CSS *********/
+
+.container-1{
+	overflow: hidden;
+	width: 600px;
+  vertical-align: middle;
+  white-space: nowrap;
+  /* position: relative; */
+}
+
+.container-1 input#search{
+  width: 600px;
+  height: 50px;
+  background: #2b303b;
+  border: none;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12pt;
+  float: left;
+	color: #fff;
+  padding-left: 15px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+
+  -webkit-transition: all .55s ease;
+  -moz-transition: all .55s ease;
+  -ms-transition: all .55s ease;
+  -o-transition: all .55s ease;
+  transition: all .55s ease;
+}
+
+
+.container-1 input#search::-webkit-input-placeholder {
+   color: #65737e;
+}
+.container-1 input#search:-moz-placeholder { /* Firefox 18- */
+   color: #65737e;
+}
+.container-1 input#search::-moz-placeholder {  /* Firefox 19+ */
+   color: #65737e;
+}
+.container-1 input#search:-ms-input-placeholder {
+   color: #65737e;
+}
+
+.container-1 button.icon{
+	-webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: none;
+  background: #232833;
+  height: 50px;
+  width: 50px;
+  color: #4f5b66;
+  opacity: 0;
+  font-size: 10pt;
+  -webkit-transition: all .55s ease;
+  -moz-transition: all .55s ease;
+  -ms-transition: all .55s ease;
+  -o-transition: all .55s ease;
+  transition: all .55s ease;
+}
+
+.container-1 input#search:focus, .container-4 input#search:active{
+    outline:none;
+}
+
+  /* ANIMATION EFFECT */
+.container-1:hover button.icon, .container-1:active button.icon, .container-1:focus button.icon{
+    outline:none;
+    opacity: 1;
+    margin-left: -50px;
+    cursor: pointer; cursor: hand;
+}

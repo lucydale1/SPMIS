@@ -53,7 +53,8 @@ def savedPapers(request):
     for item in search_data:
         for key, value in item.items():
                 if(key =="fields"):
-                    search_history.append(value)
+                    if value not in search_history:
+                        search_history.append(value)
                    
 
 
@@ -76,7 +77,7 @@ def results(request):
             message = 'eggs'
         else:
             if(user_id is not None):
-                query = historyHolder(user_id=user_id, searchQuery=request.GET.get('search_term'), date=datetime.now())
+                query = historyHolder(user_id=user_id, searchQuery=request.GET.get('search_term'))
                 query.save()
     else:
         message = 'eggs'
