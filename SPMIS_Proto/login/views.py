@@ -98,7 +98,8 @@ def results(request):
     api_results = [OrderedDict([('title',i['title']),
             ('abstract',i['abstract'][8:400]),
             ('publicationDate',i['publicationDate']),
-            ('url',i['url'][0]['value']),]) for i in jr["records"]]
+            ('url',i['url'][0]['value']),
+            ('issn', i['issn'])]) for i in jr["records"]]
 
     today = "hello there"
 
