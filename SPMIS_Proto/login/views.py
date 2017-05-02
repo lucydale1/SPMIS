@@ -63,10 +63,7 @@ def savedPapers(request):
 
     return render(request, 'account.html', {"saved_papers" : saved_papers, "search_history" : search_history})
 
-def count_occurrences(keyWord, string):
-    if " " in keyWord:
-        keyWord = keyWord.split()
-    return string.lower().split().count(keyWord)
+
 
 def results(request):
  
