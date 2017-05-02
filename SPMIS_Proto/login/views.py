@@ -62,6 +62,11 @@ def savedPapers(request):
 
     return render(request, 'account.html', {"saved_papers" : saved_papers, "search_history" : search_history})
 
+def count_occurrences(keyWord, string):
+    if " " in keyWord:
+        keyWord = keyWord.split()
+    return string.lower().split().count(keyWord)
+
 def results(request):
  
     user_id=request.user.id
@@ -86,6 +91,7 @@ def results(request):
     else:
         message = 'eggs'
 
+
     # Removes the \n newline character
     api_key = api_key[:len(api_key)-1]
 
@@ -100,13 +106,18 @@ def results(request):
 
     jr = response.json()
     api_results = [OrderedDict([('title',i['title']),
-            ('abstract',i['abstract'][8:400]),
+            ('abstract',i['abstract'][8:600]),
             ('publicationDate',i['publicationDate']),
-            ('url',i['url'][0]['value'])]) for i in jr["records"]]
+            ('url',i['url'][0]['value']), ('titleWordCount', count_occurrences(message, i['title'])), 
+            ('absWordCount', count_occurrences(message, i['abstract']))]) for i in jr["records"]]
+    
             #('issn', i['issn']) removed because it was chucking an error
 
-    today = "hello there"
+            #absWordCount is a variable counting the number of times the first search time occurs in the abstract, likewise for titleWordCount but for title
 
+
+    today = "hello there"
+    
     #if request contains url identifier
 
     if (request.GET.get('url')):
