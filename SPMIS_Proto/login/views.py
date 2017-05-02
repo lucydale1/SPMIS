@@ -15,7 +15,7 @@ from datetime import datetime
 from login.changekeys import nextkey, getstart
 from django.core.cache import cache
 from nltk.corpus import stopwords
-from login.API_interface import api_strategy, Springer # import all the clases from the API strategy
+from login.API_interface import api_strategy, Springer, Scopus # import all the clases from the API strategy
 
 
 
@@ -93,17 +93,16 @@ def results(request):
     # Removes the \n newline character
     api_key = api_key[:len(api_key)-1]
 
-
-    # Use the strategy defined in API_interface
-    api_interface = api_strategy(Springer())
-    api_results = api_interface.search(message, api_key)
     #absWordCount is a variable counting the number of times the first search time occurs in the abstract, likewise for titleWordCount but for title
 
+    # Use the strategy defined in API_interface
+    # Use scopus
+    api_to_use = Springer()
+    api_interface = api_strategy(api_to_use)
+    api_results = api_interface.search(message, api_key)
 
     print(api_results)
-
     today = "hello there"
-    
     #if request contains url identifier
 
 
