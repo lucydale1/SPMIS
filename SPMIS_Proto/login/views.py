@@ -14,6 +14,7 @@ from datetime import date as d
 from datetime import datetime
 from login.changekeys import nextkey, getstart
 from django.core.cache import cache
+from nltk.corpus import stopwords
 
 
 
@@ -62,7 +63,7 @@ def savedPapers(request):
     return render(request, 'account.html', {"saved_papers" : saved_papers, "search_history" : search_history})
 
 def results(request):
-
+ 
     user_id=request.user.id
     if cache.get('counter') is None:
         start_key = getstart()
@@ -72,7 +73,10 @@ def results(request):
         api_key = nextkey();
 
     if request.GET.get('search_term'):
+        #remove stop words
         message = request.GET['search_term']
+        stop = set(stopwords.words('english'))   
+        message = str([i for i in message.lower().split() if i not in stop])
         if message == "":
             message = 'eggs'
         else:
@@ -90,16 +94,16 @@ def results(request):
     data = {'api_key': api_key, 'q': keywords, 'p': '10'}
 
     # Request data from server --> JSON file returned
+
     response = requests.get("http://api.springer.com/metadata/json"
                             "", data)
 
     jr = response.json()
-
     api_results = [OrderedDict([('title',i['title']),
             ('abstract',i['abstract'][8:400]),
             ('publicationDate',i['publicationDate']),
-            ('url',i['url'][0]['value']),
-            ('issn', i['issn'])]) for i in jr["records"]]
+            ('url',i['url'][0]['value'])]) for i in jr["records"]]
+            #('issn', i['issn']) removed because it was chucking an error
 
     today = "hello there"
 
