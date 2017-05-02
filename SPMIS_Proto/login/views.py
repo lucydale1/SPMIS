@@ -15,6 +15,7 @@ from datetime import datetime
 from login.changekeys import nextkey, getstart
 from django.core.cache import cache
 from nltk.corpus import stopwords
+from login.API_interface import api_strategy, Springer # import all the clases from the API strategy
 
 
 
@@ -95,26 +96,12 @@ def results(request):
     # Removes the \n newline character
     api_key = api_key[:len(api_key)-1]
 
-    # Dictionary of the Querystring parameters and constraints (see website for details)
-    keywords = 'keyword: ' + message
-    data = {'api_key': api_key, 'q': keywords, 'p': '10'}
+    # Use the strategy defined in API_interface
+    api_interface = api_strategy(Springer())
+    api_results = api_interface.search(message, api_key)
+    #absWordCount is a variable counting the number of times the first search time occurs in the abstract, likewise for titleWordCount but for title
 
-    # Request data from server --> JSON file returned
-
-    response = requests.get("http://api.springer.com/metadata/json"
-                            "", data)
-
-    jr = response.json()
-    api_results = [OrderedDict([('title',i['title']),
-            ('abstract',i['abstract'][8:600]),
-            ('publicationDate',i['publicationDate']),
-            ('url',i['url'][0]['value']), ('titleWordCount', count_occurrences(message, i['title'])), 
-            ('absWordCount', count_occurrences(message, i['abstract']))]) for i in jr["records"]]
-    
-            #('issn', i['issn']) removed because it was chucking an error
-
-            #absWordCount is a variable counting the number of times the first search time occurs in the abstract, likewise for titleWordCount but for title
-
+    print(api_results)
 
     today = "hello there"
     
