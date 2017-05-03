@@ -109,8 +109,10 @@ def results(request):
     if (request.POST.get('url')):
         if(user_id is not None):
             url = request.POST['url']
+            print(url)
             #find the right paper in api_results
             for result in api_results:
+                print(result['url'])
                 if result['url'] == url:
                     
                     #create entry in db
