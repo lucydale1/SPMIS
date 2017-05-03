@@ -4,7 +4,9 @@
 
 {% if user.is_authenticated %}
   <h1>Saved Papers</h1>
-
+    {% if lensaved == 0 %}
+        <h2 style="text-align: center; color: #9ca7b0;">You currently have no saved papers.</h2>
+    {% else %}
   <table align="center">
   	<tr>
   	  <th>Paper Name</th>
@@ -24,7 +26,7 @@
 
 	  {% endif %}
 	{% endfor %}
-	
+
 	{% for key, value in dict.items %}
 
 	  {% if key != "url" and key != "date" and key == "papername" %}
@@ -41,8 +43,12 @@
 
 	{% endfor %}
 	{% endfor %}
+    {% endif %}
   </table>
   <h1>Search History</h1>
+    {% if lenhist == 0 %}
+        <h2 style="text-align: center; color: #9ca7b0;">You currently have no saved papers.</h2>
+    {% else %}
   <table align="center">
   	<tr>
   	  <th>Search History</th>
@@ -52,7 +58,7 @@
 	{% for dict in search_history %}
 	<tr>
 	<form action="{% url 'results' %}" method="get">
-	{% for key, value in dict.items %}
+    	{% for key, value in dict.items %}
 
 	  {% if key == "searchQuery" %}
 	    <td>
@@ -73,7 +79,8 @@
 	
 	{% endfor %}
 	</table>
-	
+
+        {% endif %}
 {% endif %}
 
 {% endblock %}

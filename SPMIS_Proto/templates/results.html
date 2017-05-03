@@ -2,52 +2,24 @@
 {% block title %}Results{% endblock %}
 
 {% block content %}
-
+{% if lenapi == 0 %}
+    <h1>No Results</h1>
+    <h2 style="text-align: center; color: #9ca7b0;"><a href="../">Go Back</a></h2>
+{% else %}
 <h1>Results</h1>
+    <h3 style="text-align: center; color: #9ca7b0;">Suggested Terms:</h3>
+    <div style="text-align: center; width: 100%;">
+    {% for term in suggested_terms %}
+        <form style="display: inline-block" action="{% url 'results' %}" method="get">
+	    <td>
+	    <input type="hidden" name="search_term" value="{{term}}"/>
+	  	  <button type="submit">{{term}}</button>
+	  	</td>
+	  	</form>
+    {% endfor %}
+    </div>
+    <br>
     <div class="container">
-{#        <div class="row col-md-8 col-md-offset-2">#}
-{#        <table class="table table-inverse table-striped">#}
-{#            <!--- Some of the most creative use of if statements i've seen guys! ;) --->#}
-{#            <thead class="thead-inverse">#}
-{#                <tr>#}
-{#                    <th>Relevance</th>#}
-{#                    <th>Paper Name</th>#}
-{#                    <th style="min-width: 100px">Abstract</th>#}
-{#                    <th>Date</th>#}
-{#                    <th>Save?</th>#}
-{#                </tr>#}
-{#            </thead>#}
-{##}
-{#            <tbody>#}
-{##}
-{#            {% for dict in api_results %}#}
-{#            <form action="/results/" method="get">#}
-{#              <tr>#}
-{#                <th>{{ forloop.counter }}</th>#}
-{#                <td>#}
-{#                    <a href= "{{dict.url}}">#}
-{#                    <input type="hidden" name="url" value="{{value}}">#}
-{##}
-{#                    <input type="hidden" name="search_term" value="{{search_term}}">#}
-{#                {{dict.title}}</a>#}
-{#                </td>#}
-{##}
-{#                <td>#}
-{#                    {{dict.abstract}}#}
-{#                </td>#}
-{##}
-{#                <td>#}
-{#                    {{dict.publicationDate}}#}
-{#                </td>#}
-{##}
-{#              <td>#}
-{#                <button type="submit" value="Save Paper" >#}
-{#                </td>#}
-{#              </tr>#}
-{#            </form>#}
-{#            {% endfor %}#}
-{#            </tbody>#}
-{#        </table>#}
     <div class="row">
     <table class="table table-condensed table-hover">
         <thead>
@@ -88,6 +60,7 @@
             </tr>
 
         {% endfor %}
+        {% endif %}
         </tbody>
     </table>
     </div>

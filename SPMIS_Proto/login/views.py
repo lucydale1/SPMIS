@@ -62,7 +62,7 @@ def savedPapers(request):
 
 
 
-    return render(request, 'account.html', {"saved_papers" : saved_papers, "search_history" : search_history})
+    return render(request, 'account.html', {"saved_papers" : saved_papers, "search_history" : search_history, "lensaved": len(saved_papers), "lenhist": len(search_history)})
 
 
 
@@ -159,4 +159,4 @@ def results(request):
                         p.save()
 
 
-    return render(request, "results.html", {"api_results" : api_results, "today" : today, "search_term" : message, "suggested_terms" : suggested_terms})
+    return render(request, "results.html", {"api_results" : api_results, "today" : today, "search_term" : message, "suggested_terms" : suggested_terms, "lenapi": len(api_results)})
