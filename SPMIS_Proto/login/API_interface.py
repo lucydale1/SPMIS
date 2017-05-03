@@ -15,10 +15,11 @@ class API:
     def search(self):
         pass
 
-# def count_occurrences(keyWord, string):
-#     if " " in keyWord:
-#         keyWord = keyWord.split()
-#     return string.lower().split().count(keyWord)
+def count_occurrences(keyWord, countString):
+    # print(keyWord)
+    # print(countString)
+    # print(countString.lower().split().count(keyWord))
+    return countString.lower().split().count(keyWord)
 
 class Springer(API):
     def search(self, message, api_key):
@@ -33,8 +34,9 @@ class Springer(API):
         api_results = [OrderedDict([('title', i['title']),
                                     ('abstract', i['abstract'][8:600]),
                                     ('publicationDate', i['publicationDate']),
-                                    ('url', i['url'][0]['value'])]) for i in
+                                    ('url', i['url'][0]['value']), ('titleWordCount', count_occurrences(message, i['title']))]) for i in
                                     jr["records"]]
+        
         return api_results
 
 

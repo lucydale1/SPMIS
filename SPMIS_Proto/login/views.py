@@ -101,17 +101,18 @@ def results(request):
     api_interface = api_strategy(api_to_use)
     api_results = api_interface.search(message, api_key)
 
-    print(api_results)
+    #print(api_results)
     today = "hello there"
     #if request contains url identifier
 
 
-    if (request.GET.get('url')):
+    if (request.POST.get('url')):
         if(user_id is not None):
-            url = request.GET['url']
+            url = request.POST['url']
             #find the right paper in api_results
             for result in api_results:
                 if result['url'] == url:
+                    
                     #create entry in db
                     saved_papers = []
                     data = serializers.serialize( "python", paperHolder.objects.filter(user_id=user_id ))
