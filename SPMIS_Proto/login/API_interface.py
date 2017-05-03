@@ -34,10 +34,12 @@ class Springer(API):
                                 "", data)
 
         jr = response.json()
-        api_results = [OrderedDict([('title', i['title']),
+        api_results = {i['doi']: OrderedDict([('title', i['title']),
                                     ('abstract', i['abstract'][8:600]),
                                     ('publicationDate', i['publicationDate']),
-                                    ('url', i['url'][0]['value'])]) for i in
-                                    jr["records"]]
+                                    ('url', i['url'][0]['value']),
+                                    ('doi', i['doi'])]) for i in
+                                    jr["records"]}
+
 
         return api_results

@@ -47,6 +47,8 @@ def savedPapers(request):
         paperHolder.objects.filter(user_id=this_user_id, url=url).delete()
 
     data = serializers.serialize( "python", paperHolder.objects.filter(user_id=this_user_id ))
+
+
     for item in data:
         for stuff, value in item.items():
                 if (stuff == "fields"):
@@ -69,7 +71,7 @@ def count_occurrences(keyWord, string):
     return string.lower().split().count(keyWord)
 
 def results(request):
- 
+
     user_id=request.user.id
     if cache.get('counter') is None:
         start_key = getstart()
@@ -109,31 +111,46 @@ def results(request):
     
     #if request contains url identifier
 
+    if request.method == "POST":
+        print(request.POST)
+        print("gotem")
+        paper_doi = request.POST.get('url') # get the doi code from the post
+        response_data = {}
+        print("what's this bruh?", paper_doi)
+        paper = api_results[paper_doi]      # find the specific paper information
 
-    if (request.GET.get('url')):
-        if(user_id is not None):
-            url = request.GET['url']
-            #find the right paper in api_results
-            for result in api_results:
-                if result['url'] == url:
-                    #create entry in db
-                    saved_papers = []
-                    data = serializers.serialize( "python", paperHolder.objects.filter(user_id=user_id ))
-                    for item in data:
-                        for key, value in item.items():
-                            if (key == 'fields'):
-                                saved_papers.append(value)
 
-                    date = datetime.strptime(result['publicationDate'], "%Y-%m-%d")
+        if paperHolder.objects.filter(doi=paper_doi).exists():
+            print("Item already exists in database")
+        else:
+            p = paperHolder(doi=paper_doi, user_id=user_id, papername=paper['title'], url=paper['url'], date=paper['publicationDate'])
+            p.save()
 
-                    #check if user has already saved paper change to not in and get rid of useless else statement
-                    if OrderedDict([("user_id", user_id), ("papername", result['title']), ("url", result['url']), ("date", date.date())]) in saved_papers:
-                        #user has already saved paper
-                        print("already got et mate")
-                    else:
-                        #save that paper
-                        p = paperHolder(user_id=user_id, papername=result['title'], url=result['url'], date=result['publicationDate'])
-                        p.save()
+
+    # if (request.GET.get('url')):
+    #     if(user_id is not None):
+    #         url = request.GET['url']
+    #         #find the right paper in api_results
+    #         for result in api_results:
+    #             if result['url'] == url:
+    #                 #create entry in db
+    #                 saved_papers = []
+    #                 data = serializers.serialize( "python", paperHolder.objects.filter(user_id=user_id ))
+    #                 for item in data:
+    #                     for key, value in item.items():
+    #                         if (key == 'fields'):
+    #                             saved_papers.append(value)
+    #
+    #                 date = datetime.strptime(result['publicationDate'], "%Y-%m-%d")
+    #
+    #                 #check if user has already saved paper change to not in and get rid of useless else statement
+    #                 if OrderedDict([("user_id", user_id), ("papername", result['title']), ("url", result['url']), ("date", date.date())]) in saved_papers:
+    #                     #user has already saved paper
+    #                     print("already got et mate")
+    #                 else:
+    #                     #save that paper
+    #                     p = paperHolder(user_id=user_id, papername=result['title'], url=result['url'], date=result['publicationDate'])
+    #                     p.save()
 
 
     return render(request, "results.html", {"api_results" : api_results, "today" : today, "search_term" : message})
