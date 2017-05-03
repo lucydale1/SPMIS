@@ -5,49 +5,6 @@
 
 <h1>Results</h1>
     <div class="container">
-{#        <div class="row col-md-8 col-md-offset-2">#}
-{#        <table class="table table-inverse table-striped">#}
-{#            <!--- Some of the most creative use of if statements i've seen guys! ;) --->#}
-{#            <thead class="thead-inverse">#}
-{#                <tr>#}
-{#                    <th>Relevance</th>#}
-{#                    <th>Paper Name</th>#}
-{#                    <th style="min-width: 100px">Abstract</th>#}
-{#                    <th>Date</th>#}
-{#                    <th>Save?</th>#}
-{#                </tr>#}
-{#            </thead>#}
-{##}
-{#            <tbody>#}
-{##}
-{#            {% for dict in api_results %}#}
-{#            <form action="/results/" method="get">#}
-{#              <tr>#}
-{#                <th>{{ forloop.counter }}</th>#}
-{#                <td>#}
-{#                    <a href= "{{dict.url}}">#}
-{#                    <input type="hidden" name="url" value="{{value}}">#}
-{##}
-{#                    <input type="hidden" name="search_term" value="{{search_term}}">#}
-{#                {{dict.title}}</a>#}
-{#                </td>#}
-{##}
-{#                <td>#}
-{#                    {{dict.abstract}}#}
-{#                </td>#}
-{##}
-{#                <td>#}
-{#                    {{dict.publicationDate}}#}
-{#                </td>#}
-{##}
-{#              <td>#}
-{#                <button type="submit" value="Save Paper" >#}
-{#                </td>#}
-{#              </tr>#}
-{#            </form>#}
-{#            {% endfor %}#}
-{#            </tbody>#}
-{#        </table>#}
     <div class="row">
     <table class="table table-condensed table-hover">
         <thead>
@@ -60,7 +17,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for dict in api_results %}
+        {% for doi, dict in api_results.items %}
             <tr id="ID_{{ forloop.counter }}">
                 <div>
                 <th class="result_id" scope="row">
@@ -80,7 +37,7 @@
 
                 <td>
                     {% csrf_token %}
-                    <button style="background-color: transparent; cursor: pointer;" id="btn_{{ forloop.counter }}" onclick="add_fav('{{ forloop.counter }}', '{{ dict.url }}', '{{ dict.title }}')" class="btn btn-default btn-sm add-fav">
+                    <button style="background-color: transparent; cursor: pointer;" id="btn_{{ forloop.counter }}" onclick="add_fav('{{ forloop.counter }}', '{{ doi }}')" class="btn btn-default btn-sm add-fav">
                       <span id="icon_{{ forloop.counter }}" style="color:#fffa5f; font-size: 2em" class="fa fa-star-o" aria-hidden="true"></span>
                     </button>
                 </td>

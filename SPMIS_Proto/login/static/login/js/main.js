@@ -1,33 +1,27 @@
-/**
- * Created by ojc on 30/04/2017.
- */
 function create_post(ID){
     console.log("---Create POST----")
     console.log($('ID_' + ID + ' > .url-text').val())
     // console.log($form.find('.save-paper').val())
 };
 
-function add_fav(ID_in, url_in, title_in){
+function add_fav(ID_in, doi_in){
         $.ajax({
-        url: "/results/",  // the endpoint
+        url: "",  // the endpoint
         type: "POST",      // http method
         data: {
             csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
-            ID: ID_in,
-            url: url_in,
-            title: title_in,
+            doi: doi_in,
         },
 
         // handle a successful response
         success : function(json) {
             // console.log(json);
             console.log("Success");
-            console.log(ID_in)
-            console.log(url_in)
-            console.log(title_in)
+            console.log(doi_in);
+            // console.log(json);
             $('#btn_' + ID_in + ' span')
                 .removeClass('fa-star-o')
-                .addClass('fa-star')
+                .addClass('fa-star');
         },
 
         //handle a non-successful response

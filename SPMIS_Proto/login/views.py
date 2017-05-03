@@ -15,7 +15,7 @@ from datetime import datetime
 from login.changekeys import nextkey, getstart
 from django.core.cache import cache
 from nltk.corpus import stopwords
-from login.API_interface import api_strategy, Springer, Scopus # import all the clases from the API strategy
+from login.API_interface import api_strategy, Springer # import all the clases from the API strategy
 
 
 
@@ -93,46 +93,30 @@ def results(request):
     # Removes the \n newline character
     api_key = api_key[:len(api_key)-1]
 
-    #absWordCount is a variable counting the number of times the first search time occurs in the abstract, likewise for titleWordCount but for title
 
     # Use the strategy defined in API_interface
-    # Use scopus
-    api_to_use = Springer()
-    api_interface = api_strategy(api_to_use)
+    api_interface = api_strategy(Springer())
     api_results = api_interface.search(message, api_key)
+    #absWordCount is a variable counting the number of times the first search time occurs in the abstract, likewise for titleWordCount but for title
 
-    #print(api_results)
+
+    print(api_results)
+
     today = "hello there"
-    #if request contains url identifier
 
+    if request.method == "POST":
+        print(request.POST)
+        print("gotem")
+        paper_doi = request.POST.get('doi') # get the doi code from the post
+        response_data = {}
+        print("what's this bruh?", paper_doi)
+        paper = api_results[paper_doi]      # find the specific paper information
 
-    if (request.POST.get('url')):
-        if(user_id is not None):
-            url = request.POST['url']
-            print(url)
-            #find the right paper in api_results
-            for result in api_results:
-                print(result['url'])
-                if result['url'] == url:
-                    
-                    #create entry in db
-                    saved_papers = []
-                    data = serializers.serialize( "python", paperHolder.objects.filter(user_id=user_id ))
-                    for item in data:
-                        for key, value in item.items():
-                            if (key == 'fields'):
-                                saved_papers.append(value)
-
-                    date = datetime.strptime(result['publicationDate'], "%Y-%m-%d")
-
-                    #check if user has already saved paper change to not in and get rid of useless else statement
-                    if OrderedDict([("user_id", user_id), ("papername", result['title']), ("url", result['url']), ("date", date.date())]) in saved_papers:
-                        #user has already saved paper
-                        print("already got et mate")
-                    else:
-                        #save that paper
-                        p = paperHolder(user_id=user_id, papername=result['title'], url=result['url'], date=result['publicationDate'])
-                        p.save()
+        if paperHolder.objects.filter(doi=paper_doi).exists():
+            print("Item already exists in database")
+        else:
+            p = paperHolder(doi=paper_doi, user_id=user_id, papername=paper['title'], url=paper['url'], date=paper['publicationDate'])
+            p.save()
 
 
     return render(request, "results.html", {"api_results" : api_results, "today" : today, "search_term" : message})
