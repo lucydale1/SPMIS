@@ -6,7 +6,7 @@ function create_post(ID){
 
 function add_fav(ID_in, doi_in){
         $.ajax({
-        url: "results/",  // the endpoint
+        url: "",  // the endpoint
         type: "POST",      // http method
         data: {
             csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
@@ -17,8 +17,8 @@ function add_fav(ID_in, doi_in){
         success : function(json) {
             // console.log(json);
             console.log("Success");
-            console.log(data.doi);
-            console.log(json);
+            console.log(doi_in);
+            // console.log(json);
             $('#btn_' + ID_in + ' span')
                 .removeClass('fa-star-o')
                 .addClass('fa-star');

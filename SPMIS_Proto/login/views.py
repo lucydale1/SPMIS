@@ -108,13 +108,11 @@ def results(request):
     print(api_results)
 
     today = "hello there"
-    
-    #if request contains url identifier
 
     if request.method == "POST":
         print(request.POST)
         print("gotem")
-        paper_doi = request.POST.get('url') # get the doi code from the post
+        paper_doi = request.POST.get('doi') # get the doi code from the post
         response_data = {}
         print("what's this bruh?", paper_doi)
         paper = api_results[paper_doi]      # find the specific paper information
@@ -126,31 +124,6 @@ def results(request):
             p = paperHolder(doi=paper_doi, user_id=user_id, papername=paper['title'], url=paper['url'], date=paper['publicationDate'])
             p.save()
 
-
-    # if (request.GET.get('url')):
-    #     if(user_id is not None):
-    #         url = request.GET['url']
-    #         #find the right paper in api_results
-    #         for result in api_results:
-    #             if result['url'] == url:
-    #                 #create entry in db
-    #                 saved_papers = []
-    #                 data = serializers.serialize( "python", paperHolder.objects.filter(user_id=user_id ))
-    #                 for item in data:
-    #                     for key, value in item.items():
-    #                         if (key == 'fields'):
-    #                             saved_papers.append(value)
-    #
-    #                 date = datetime.strptime(result['publicationDate'], "%Y-%m-%d")
-    #
-    #                 #check if user has already saved paper change to not in and get rid of useless else statement
-    #                 if OrderedDict([("user_id", user_id), ("papername", result['title']), ("url", result['url']), ("date", date.date())]) in saved_papers:
-    #                     #user has already saved paper
-    #                     print("already got et mate")
-    #                 else:
-    #                     #save that paper
-    #                     p = paperHolder(user_id=user_id, papername=result['title'], url=result['url'], date=result['publicationDate'])
-    #                     p.save()
 
 
     return render(request, "results.html", {"api_results" : api_results, "today" : today, "search_term" : message})
