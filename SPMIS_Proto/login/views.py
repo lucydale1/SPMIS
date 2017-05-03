@@ -80,6 +80,9 @@ def results(request):
         message = request.GET['search_term']
         stop = set(stopwords.words('english'))   
         message = str([i for i in message.lower().split() if i not in stop])
+        message = message[1:-1]
+        message = message.replace("'", "")
+        message = message.replace(",", "")
         if message == "":
             message = 'eggs'
         else:

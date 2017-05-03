@@ -15,11 +15,20 @@ class API:
     def search(self):
         pass
 
-def count_occurrences(keyWord, countString):
-    # print(keyWord)
-    # print(countString)
-    # print(countString.lower().split().count(keyWord))
-    return countString.lower().split().count(keyWord)
+def rankPapers(api_results, searchTerms):
+
+    for paper in api_results:
+        c=0
+        for term in searchTerms.split():
+            c += paper['abstract'].lower().split().count(term)
+            c += 2*(paper['title'].lower().split().count(term))
+        paper['relevancyNum'] = c
+
+    api_results = sorted(api_results, key=lambda k: k['relevancyNum'], reverse=True)
+
+    return api_results
+
+   # return 
 
 class Springer(API):
     def search(self, message, api_key):
@@ -34,10 +43,10 @@ class Springer(API):
         api_results = [OrderedDict([('title', i['title']),
                                     ('abstract', i['abstract'][8:600]),
                                     ('publicationDate', i['publicationDate']),
-                                    ('url', i['url'][0]['value']), ('titleWordCount', count_occurrences(message, i['title']))]) for i in
-                                    jr["records"]]
-        
-        return api_results
+                                    ('url', i['url'][0]['value'])]) for i in jr["records"]]
+        rankPapers(api_results, message)
+
+        return rankPapers(api_results, message)
 
 
 class Scopus(API):
