@@ -113,13 +113,14 @@ def results(request):
         totalString = totalString.replace(term, "")
 
     words = nltk.word_tokenize(totalString)
-    jakes_blacklist = ["using", "use", "study", "based", "ing", "different", "quality", "used"]
+    jakes_blacklist = ["using", "study", "based", "different", "quality", "used"]
     for word in jakes_blacklist:
         stop.add(word)
     words = [word for word in words if len(word) > 3]
     words = [word for word in words if not word.isnumeric()]
     words = [word.lower() for word in words]
     words = [word for word in words if word not in stop]
+    words = [word for word in words if word not in message]
     fdist = nltk.FreqDist(words).most_common(3)
     suggested_terms = []
     for word, frequency in fdist:
