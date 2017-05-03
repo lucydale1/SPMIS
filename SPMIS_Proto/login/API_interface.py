@@ -33,7 +33,7 @@ def rankPapers(api_results, searchTerms):
 class Springer(API):
     def search(self, message, api_key):
         keywords = 'keyword: ' + message                   # set user search term as keywork
-        data = {'api_key': api_key, 'q': keywords, 'p': '10'}   # set request.get.data with the required fields
+        data = {'api_key': api_key, 'q': keywords, 'p': '100'}   # set request.get.data with the required fields
 
         # Save response from API
         response = requests.get("http://api.springer.com/metadata/json"
@@ -44,7 +44,6 @@ class Springer(API):
                                     ('abstract', i['abstract'][8:600]),
                                     ('publicationDate', i['publicationDate']),
                                     ('url', i['url'][0]['value'])]) for i in jr["records"]]
-        rankPapers(api_results, message)
 
         return rankPapers(api_results, message)
 

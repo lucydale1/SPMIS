@@ -16,6 +16,7 @@ from login.changekeys import nextkey, getstart
 from django.core.cache import cache
 from nltk.corpus import stopwords
 from login.API_interface import api_strategy, Springer, Scopus # import all the clases from the API strategy
+import nltk
 
 
 
@@ -66,7 +67,7 @@ def savedPapers(request):
 
 
 def results(request):
- 
+    stop = set(stopwords.words('english'))
     user_id=request.user.id
     if cache.get('counter') is None:
         start_key = getstart()
@@ -77,8 +78,7 @@ def results(request):
 
     if request.GET.get('search_term'):
         #remove stop words
-        message = request.GET['search_term']
-        stop = set(stopwords.words('english'))   
+        message = request.GET['search_term']           
         message = str([i for i in message.lower().split() if i not in stop])
         message = message[1:-1]
         message = message.replace("'", "")
@@ -103,6 +103,27 @@ def results(request):
     api_to_use = Springer()
     api_interface = api_strategy(api_to_use)
     api_results = api_interface.search(message, api_key)
+
+    #frequency
+    abstractString = ""
+    titleString = ""
+    for paper in api_results:
+        abstractString += paper['abstract']
+        titleString += paper['title']
+    totalString = abstractString + titleString
+    message = message.split()
+    for term in message:
+        totalString = totalString.replace(term, "")
+    words = nltk.word_tokenize(totalString)
+    words = [word for word in words if len(word) > 1]
+    words = [word for word in words if not word.isnumeric()]
+    words = [word.lower() for word in words]
+    words = [word for word in words if word not in stop]
+    fdist = nltk.FreqDist(words).most_common(3)
+    suggested_terms = []
+    for word, frequency in fdist:
+        suggested_terms.append(word)
+
 
     #print(api_results)
     today = "hello there"
@@ -138,4 +159,4 @@ def results(request):
                         p.save()
 
 
-    return render(request, "results.html", {"api_results" : api_results, "today" : today, "search_term" : message})
+    return render(request, "results.html", {"api_results" : api_results, "today" : today, "search_term" : message, "suggested_terms" : suggested_terms})
