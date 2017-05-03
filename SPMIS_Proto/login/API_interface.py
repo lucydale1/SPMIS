@@ -24,7 +24,7 @@ def count_occurrences(keyWord, countString):
 class Springer(API):
     def search(self, message, api_key):
         keywords = 'keyword: ' + message                   # set user search term as keywork
-        data = {'api_key': api_key, 'q': keywords, 'p': '10'}   # set request.get.data with the required fields
+        data = {'api_key': api_key, 'q': keywords, 'p': '100'}   # set request.get.data with the required fields
 
         # Save response from API
         response = requests.get("http://api.springer.com/metadata/json"
