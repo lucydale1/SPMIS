@@ -105,14 +105,18 @@ def results(request):
     abstractString = ""
     titleString = ""
     for key, paper in api_results.items():
-        abstractString += paper['abstract']
-        titleString += paper['title']
+        abstractString += " " +paper['abstract']
+        titleString += " " + paper['title']
     totalString = abstractString + titleString
     message = message.split()
     for term in message:
         totalString = totalString.replace(term, "")
+
     words = nltk.word_tokenize(totalString)
-    words = [word for word in words if len(word) > 1]
+    jakes_blacklist = ["using", "use", "study", "based", "ing", "different", "quality", "used"]
+    for word in jakes_blacklist:
+        stop.add(word)
+    words = [word for word in words if len(word) > 3]
     words = [word for word in words if not word.isnumeric()]
     words = [word.lower() for word in words]
     words = [word for word in words if word not in stop]
@@ -122,7 +126,6 @@ def results(request):
         suggested_terms.append(word)
 
 
-    #print(api_results)
     today = "hello there"
     #if request contains url identifier
 
