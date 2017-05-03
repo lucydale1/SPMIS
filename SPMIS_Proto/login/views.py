@@ -127,7 +127,7 @@ def results(request):
     #if request contains url identifier
 
     if request.method == "POST":
-        print(request.POST)
+        
         print("gotem")
         paper_doi = request.POST.get('doi') # get the doi code from the post
         response_data = {}
