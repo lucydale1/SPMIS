@@ -16,7 +16,7 @@ from login.changekeys import nextkey, getstart
 from django.core.cache import cache
 from nltk.corpus import stopwords
 from login.API_interface import api_strategy, Springer # import all the clases from the API strategy
-
+import nltk
 
 
 def register1(request):
@@ -61,12 +61,12 @@ def savedPapers(request):
 
 
 
-    return render(request, 'account.html', {"saved_papers" : saved_papers, "search_history" : search_history})
+    return render(request, 'account.html', {"saved_papers" : saved_papers, "search_history" : search_history, "lensaved": len(saved_papers), "lenhist": len(search_history)})
 
 
 
 def results(request):
- 
+    stop = set(stopwords.words('english'))
     user_id=request.user.id
     if cache.get('counter') is None:
         start_key = getstart()
@@ -78,8 +78,10 @@ def results(request):
     if request.GET.get('search_term'):
         #remove stop words
         message = request.GET['search_term']
-        stop = set(stopwords.words('english'))   
         message = str([i for i in message.lower().split() if i not in stop])
+        message = message[1:-1]
+        message = message.replace("'", "")
+        message = message.replace(",", "")
         if message == "":
             message = 'eggs'
         else:
@@ -93,16 +95,36 @@ def results(request):
     # Removes the \n newline character
     api_key = api_key[:len(api_key)-1]
 
+    #absWordCount is a variable counting the number of times the first search time occurs in the abstract, likewise for titleWordCount but for title
 
     # Use the strategy defined in API_interface
     api_interface = api_strategy(Springer())
     api_results = api_interface.search(message, api_key)
-    #absWordCount is a variable counting the number of times the first search time occurs in the abstract, likewise for titleWordCount but for title
+
+    #frequency
+    abstractString = ""
+    titleString = ""
+    for key, paper in api_results.items():
+        abstractString += paper['abstract']
+        titleString += paper['title']
+    totalString = abstractString + titleString
+    message = message.split()
+    for term in message:
+        totalString = totalString.replace(term, "")
+    words = nltk.word_tokenize(totalString)
+    words = [word for word in words if len(word) > 1]
+    words = [word for word in words if not word.isnumeric()]
+    words = [word.lower() for word in words]
+    words = [word for word in words if word not in stop]
+    fdist = nltk.FreqDist(words).most_common(3)
+    suggested_terms = []
+    for word, frequency in fdist:
+        suggested_terms.append(word)
 
 
-    print(api_results)
-
+    #print(api_results)
     today = "hello there"
+    #if request contains url identifier
 
     if request.method == "POST":
         print(request.POST)
@@ -119,4 +141,4 @@ def results(request):
             p.save()
 
 
-    return render(request, "results.html", {"api_results" : api_results, "today" : today, "search_term" : message})
+    return render(request, "results.html", {"api_results" : api_results, "today" : today, "search_term" : message, "suggested_terms" : suggested_terms, "lenapi": len(api_results)})

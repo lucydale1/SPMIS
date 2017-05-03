@@ -15,7 +15,25 @@ class API:
     def search(self):
         pass
 
+def rankPapers(api_results, searchTerms):
 
+    for key, paper in api_results.items():
+        c=0
+        for term in searchTerms.split():
+            c += paper['abstract'].lower().split().count(term)
+            c += 2*(paper['title'].lower().split().count(term))
+        paper['relevancyNum'] = c
+
+    print(api_results)
+
+    api_results = OrderedDict(api_results)
+    # api_results = sorted(api_results, key=lambda k: k['relevancyNum'], reverse=True)
+    api_results = OrderedDict(sorted(api_results.items(), key=lambda k: k[1]['relevancyNum'], reverse=True))
+    print(api_results)
+
+    return api_results
+
+   # return
 
 class Springer(API):
     def search(self, message, api_key):
@@ -35,4 +53,4 @@ class Springer(API):
                                     jr["records"]}
 
 
-        return api_results
+        return rankPapers(api_results, message)
