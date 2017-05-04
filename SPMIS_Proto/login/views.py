@@ -20,6 +20,13 @@ import nltk
 
 
 def register1(request):
+    this_user_id = request.user.id
+    if request.GET.get('deletePLS') == 'yes':
+        u = User.objects.get(id = this_user_id)
+        print("account deleted")
+        u.delete()
+        return HttpResponseRedirect('../')
+
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -57,9 +64,8 @@ def savedPapers(request):
                 if(key =="fields"):
                     if value not in search_history:
                         search_history.append(value)
-                   
 
-
+        
 
     return render(request, 'account.html', {"saved_papers" : saved_papers, "search_history" : search_history, "lensaved": len(saved_papers), "lenhist": len(search_history)})
 
@@ -86,8 +92,12 @@ def results(request):
             message = 'eggs'
         else:
             if(user_id is not None):
-                query = historyHolder(user_id=user_id, searchQuery=request.GET.get('search_term'), dateAndTime=datetime.now())
-                query.save()
+                if historyHolder.objects.filter(searchQuery=request.GET.get('search_term'), user_id=user_id).exists():
+                    print("NOOOO")
+                else:
+                    query = historyHolder(user_id=user_id, searchQuery=request.GET.get('search_term'), dateAndTime=datetime.now())
+                    print(datetime.now())
+                    query.save()
     else:
         message = 'eggs'
 
