@@ -92,10 +92,11 @@ def results(request):
             message = 'eggs'
         else:
             if(user_id is not None):
-                if (historyHolder.objects.filter(searchQuery=request.GET.get('search_term')).exists()):
+                if historyHolder.objects.filter(searchQuery=request.GET.get('search_term'), user_id=user_id).exists():
                     print("NOOOO")
                 else:
                     query = historyHolder(user_id=user_id, searchQuery=request.GET.get('search_term'), dateAndTime=datetime.now())
+                    print(datetime.now())
                     query.save()
     else:
         message = 'eggs'
