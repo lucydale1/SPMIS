@@ -105,17 +105,22 @@ def results(request):
     abstractString = ""
     titleString = ""
     for key, paper in api_results.items():
-        abstractString += paper['abstract']
-        titleString += paper['title']
+        abstractString += " " +paper['abstract']
+        titleString += " " + paper['title']
     totalString = abstractString + titleString
     message = message.split()
     for term in message:
         totalString = totalString.replace(term, "")
+
     words = nltk.word_tokenize(totalString)
-    words = [word for word in words if len(word) > 1]
+    jakes_blacklist = ["using", "study", "based", "different", "quality", "used"]
+    for word in jakes_blacklist:
+        stop.add(word)
+    words = [word for word in words if len(word) > 3]
     words = [word for word in words if not word.isnumeric()]
     words = [word.lower() for word in words]
     words = [word for word in words if word not in stop]
+    words = [word for word in words if word not in message]
     fdist = nltk.FreqDist(words).most_common(3)
     suggested_terms = []
     for word, frequency in fdist:
@@ -126,7 +131,6 @@ def results(request):
     #if request contains url identifier
 
     if request.method == "POST":
-        print(request.POST)
         paper_doi = request.POST.get('doi') # get the doi code from the post
         paper = api_results[paper_doi]      # find the specific paper information
 
