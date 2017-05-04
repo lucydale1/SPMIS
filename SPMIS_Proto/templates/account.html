@@ -7,7 +7,8 @@
   <form action="{% url 'register' %}" method="get">
 
   <input type="hidden" name="deletePLS" value="yes"/>
-  <button type="submit">Delete Account</button>>
+  <br />
+  <button type="submit" class="btn btn-danger">Delete Account</button>>
   	
   </form>
 
@@ -43,7 +44,7 @@
 	  {% elif key != "papername" and key != "url" and key == "date" %}
 	    <td> {{value}} </td>
 	    
-	    <td> <button type="submit" value="Delete!" ></td>
+	    <td> <button type="submit" class="btn btn-danger btn-group-sm" value="Delete!" >X</td>
 	    </form>
 	    </tr>
 
@@ -71,7 +72,7 @@
 	  {% if key == "searchQuery" %}
 	    <td>
 	    <input type="hidden" name="search_term" value="{{value}}"/>
-	  	  <button type="submit">{{value}}</button>
+	  	  <button type="submit" class="btn btn-default">{{value}}</button>
 	  	</td>
 	  	</form>
 	  {% endif %}	

@@ -167,3 +167,7 @@ h1 {
     margin-left: -50px;
     cursor: pointer; cursor: hand;
 }
+
+button:hover {
+    cursor: pointer; cursor; hand;
+}
