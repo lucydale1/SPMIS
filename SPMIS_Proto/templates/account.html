@@ -3,6 +3,14 @@
 {% block content %}
 
 {% if user.is_authenticated %}
+
+  <form action="{% url 'register' %}" method="get">
+
+  <input type="hidden" name="deletePLS" value="yes"/>
+  <button type="submit">Delete Account</button>>
+  	
+  </form>
+
   <h1>Saved Papers</h1>
     {% if lensaved == 0 %}
         <h2 style="text-align: center; color: #9ca7b0;">You currently have no saved papers.</h2>
