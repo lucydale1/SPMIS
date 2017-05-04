@@ -51,10 +51,17 @@
                 </td>
 
                 <td>
-                    {% csrf_token %}
-                    <button style="background-color: transparent; cursor: pointer;" id="btn_{{ forloop.counter }}" onclick="add_fav('{{ forloop.counter }}', '{{ doi }}')" class="btn btn-default btn-sm add-fav">
-                      <span id="icon_{{ forloop.counter }}" style="color:#fffa5f; font-size: 2em" class="fa fa-star-o" aria-hidden="true"></span>
-                    </button>
+                    {% if doi in pks %}
+                        {% csrf_token %}
+                        <button style="background-color: transparent; cursor: pointer;" id="btn_{{ forloop.counter }}" onclick="remove_fav('{{ forloop.counter }}', '{{ doi }}')" class="btn btn-default btn-sm add-fav">
+                          <span id="icon_{{ forloop.counter }}" style="color:#fffa5f; font-size: 2em" class="fa fa-star" aria-hidden="true"></span>
+                        </button>
+                    {% else %}
+                        {% csrf_token %}
+                        <button style="background-color: transparent; cursor: pointer;" id="btn_{{ forloop.counter }}" onclick="add_fav('{{ forloop.counter }}', '{{ doi }}')" class="btn btn-default btn-sm add-fav">
+                          <span id="icon_{{ forloop.counter }}" style="color:#fffa5f; font-size: 2em" class="fa fa-star-o" aria-hidden="true"></span>
+                        </button>
+                    {% endif %}
                 </td>
                 </div>
             </tr>

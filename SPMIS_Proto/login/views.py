@@ -129,16 +129,28 @@ def results(request):
 
     today = "hello there"
     #if request contains url identifier
+    pks = [item.pk for item in paperHolder.objects.all()]
 
     if request.method == "POST":
-        paper_doi = request.POST.get('doi') # get the doi code from the post
-        paper = api_results[paper_doi]      # find the specific paper information
+        if 'delete' in request.POST:
+            print('delete set')
+            this_user_id = request.user.id
+            doi = request.GET.get('doi')
+            paperHolder.objects.filter(doi=doi, user_id=this_user_id).delete()
+            return render(request, "results.html",
+                          {"pks": pks, "api_results": api_results, "today": today, "search_term": message,
+                           "suggested_terms": suggested_terms, "lenapi": len(api_results)})
 
-        if paperHolder.objects.filter(doi=paper_doi).exists():
-            print("Item already exists in database")
         else:
-            p = paperHolder(doi=paper_doi, user_id=user_id, papername=paper['title'], url=paper['url'], date=paper['publicationDate'])
-            p.save()
+            paper_doi = request.POST.get('doi') # get the doi code from the post
+            paper = api_results[paper_doi]      # find the specific paper information
+
+            if paperHolder.objects.filter(doi=paper_doi).exists():
+                print("Item already exists in database")
+            else:
+                p = paperHolder(doi=paper_doi, user_id=user_id, papername=paper['title'], url=paper['url'], date=paper['publicationDate'])
+                p.save()
 
 
-    return render(request, "results.html", {"api_results" : api_results, "today" : today, "search_term" : message, "suggested_terms" : suggested_terms, "lenapi": len(api_results)})
+
+    return render(request, "results.html", {"pks": pks, "api_results" : api_results, "today" : today, "search_term" : message, "suggested_terms" : suggested_terms, "lenapi": len(api_results)})

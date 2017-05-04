@@ -4,6 +4,31 @@ function create_post(ID){
     // console.log($form.find('.save-paper').val())
 };
 
+function remove_fav(ID_in, doi_in){
+    console.log("REMOVE");
+    $.ajax({
+        url: "",
+        type: "POST",
+        data: {
+            csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+            delete: 'true',
+            doi: doi_in,
+        },
+
+        // handle a successful response
+        success: function(json) {
+            $('#btn_' + ID_in + ' span')
+                .removeClass('fa-star')
+                .addClass('fa-star-o');
+        },
+
+        // handle a non-successful response
+        error : function(xhr, errmsg, err) {
+            console.log(xhr.status + ": " + xhr.responseText);
+        }
+    })
+}
+
 function add_fav(ID_in, doi_in){
         $.ajax({
         url: "",  // the endpoint
@@ -17,7 +42,7 @@ function add_fav(ID_in, doi_in){
         success : function(json) {
             // console.log(json);
             console.log("Success");
-            console.log(doi_in);
+            // console.log(doi_in);
             // console.log(json);
             $('#btn_' + ID_in + ' span')
                 .removeClass('fa-star-o')
