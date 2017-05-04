@@ -24,12 +24,8 @@ def rankPapers(api_results, searchTerms):
             c += 2*(paper['title'].lower().split().count(term))
         paper['relevancyNum'] = c
 
-    print(api_results)
-
     api_results = OrderedDict(api_results)
-    # api_results = sorted(api_results, key=lambda k: k['relevancyNum'], reverse=True)
     api_results = OrderedDict(sorted(api_results.items(), key=lambda k: k[1]['relevancyNum'], reverse=True))
-    print(api_results)
 
     return api_results
 

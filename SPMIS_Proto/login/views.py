@@ -122,16 +122,12 @@ def results(request):
         suggested_terms.append(word)
 
 
-    #print(api_results)
     today = "hello there"
     #if request contains url identifier
 
     if request.method == "POST":
         print(request.POST)
-        print("gotem")
         paper_doi = request.POST.get('doi') # get the doi code from the post
-        response_data = {}
-        print("what's this bruh?", paper_doi)
         paper = api_results[paper_doi]      # find the specific paper information
 
         if paperHolder.objects.filter(doi=paper_doi).exists():
